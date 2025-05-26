@@ -1,0 +1,38 @@
+services:
+  fake_news_bot:
+    build: .
+    container_name: fake_news_telegram_bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    depends_on:
+      - clickhouse-server
+    networks:
+      - bot_network
+
+  clickhouse-server:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse_db
+    restart: unless-stopped
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - ./clickhouse_config/my_users.xml:/etc/clickhouse-server/users.d/my_users.xml
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    networks:
+      - bot_network
+
+volumes:
+  clickhouse_data:
+  # nltk_data_volume: # Если используешь NLTK данные
+
+networks:
+  bot_network:
+    driver: bridge

@@ -1,0 +1,25 @@
+<clickhouse>
+    <users>
+        <default>
+            <password>your_strong_password</password>
+            <networks>
+                <ip>::/0</ip>
+            </networks>
+            <profile>default</profile>
+            <quota>default</quota>
+            <access_management>1</access_management>
+        </default>
+        <bot_user>
+            <password>bot_password</password>
+            <networks>
+                <ip>::/0</ip>
+            </networks>
+            <profile>default</profile>
+            <quota>default</quota>
+            <access_management>1</access_management>
+            <databases>
+                <fakenews_db></fakenews_db>
+            </databases>
+        </bot_user>
+    </users>
+</clickhouse>
